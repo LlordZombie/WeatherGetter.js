@@ -8,6 +8,6 @@
     "rootDir": "./ts"
   },
   "include": [
-    "ts/**/*.ts",
+    "ts/**/*.ts"
   ]
 }

@@ -11,9 +11,11 @@
   "description": "Übung zum Lernen von TypeScript\nHolt Wetter mit API",
   "dependencies": {
     "node-fetch": "^3.3.2",
+    "readline-sync": "^1.4.10",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@types/node": "^20.9.0"
+    "@types/node": "^20.9.0",
+    "@types/readline-sync": "^1.4.7"
   }
 }
