@@ -43,31 +43,37 @@ var Version = JSON.parse(fs.readFileSync("../package.json", "utf8")).version;
 var ProgramName = "WeatherGetter";
 var Date = 2023;
 function fetchCoords(city) {
-    var _this = this;
-    var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=".concat(city, "&limit=1&appid=").concat(API_KEY);
-    return fetch(apiUrl)
-        .then(function (response) {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-        .then(function (data) { return __awaiter(_this, void 0, void 0, function () {
-        var jsonData;
+    return __awaiter(this, void 0, void 0, function () {
+        var apiUrl, response, data, jsonData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    jsonData = JSON.stringify(data, null, 2);
-                    return [4 /*yield*/, fs.promises.writeFile('C:\\Users\\LinusFreistetter\\WebstormProjects\\untitled2\\js\\coordData.json', jsonData, 'utf8')];
+                    apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=".concat(city, "&limit=1&appid=").concat(API_KEY);
+                    _a.label = 1;
                 case 1:
+                    _a.trys.push([1, 5, , 6]);
+                    return [4 /*yield*/, fetch(apiUrl)];
+                case 2:
+                    response = _a.sent();
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return [4 /*yield*/, response.json()];
+                case 3:
+                    data = _a.sent();
+                    jsonData = JSON.stringify(data, null, 2);
+                    return [4 /*yield*/, fs.promises.writeFile('..\\js\\coordData.json', jsonData, 'utf8')];
+                case 4:
                     _a.sent();
                     console.log('Data written to file successfully');
-                    return [2 /*return*/];
+                    return [3 /*break*/, 6];
+                case 5:
+                    error_1 = _a.sent();
+                    console.error('Error fetching or writing data:', error_1);
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
-    }); })
-        .catch(function (error) {
-        console.error('Error fetching or writing data:', error);
     });
 }
 function input() {
@@ -92,7 +98,7 @@ function main() {
                 case 3:
                     _a.sent();
                     console.log("\nYour location is " + userInput);
-                    data = JSON.parse(fs.readFileSync("C:\\Users\\LinusFreistetter\\WebstormProjects\\untitled2\\js\\coordData.json", "utf8"));
+                    data = JSON.parse(fs.readFileSync("..\\js\\coordData.json", "utf8"));
                     longitude = data[0].lon;
                     latitude = data[0].lat;
                     console.log(longitude + " " + latitude);
