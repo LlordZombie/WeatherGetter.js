@@ -1,5 +1,5 @@
 {
-  "name": "weather-getter.js",
+  "name": "weather-getter",
   "version": "1.0.0",
   "main": "weather.js",
   "scripts": {

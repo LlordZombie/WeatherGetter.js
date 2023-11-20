@@ -1,22 +1,44 @@
 import * as fs from 'fs';
 import * as readlineSync from 'readline-sync';
-
+//TODO aus koordinaten wetter machen
 const API_KEY: string = "562853829c3a677c00b469cfe4446517";
 const Version: string = JSON.parse(fs.readFileSync("../package.json", "utf8")).version;
 const ProgramName = "WeatherGetter";
 const Date = 2023;
 
-async function fetchCoords(city: string) {
-    const apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`;
+//----------------------------------------------------------------------------------------------------------------------
+
+let fetchError = false;
+
+//----------------------------------------------------------------------------------------------------------------------
+
+
+async function fetchCoords(apiUrlNum: number, lon: number, lat: number, city: string) {
+    const coordUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`;
+    const coordFile = '..\\js\\coordData.json';
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+    const weatherFile = "..\\js\\weatherData.json";
+    let usedUrl: string;
+    let usedFile: string;
+    if (apiUrlNum === 0) {
+        usedUrl = coordUrl;
+        usedFile = coordFile;
+    } else if (apiUrlNum === 1) {
+        usedUrl = weatherUrl;
+        usedFile = weatherFile;
+    } else {
+        console.error("too stupid for 0 and 1")
+        return;
+    }
 
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(usedUrl);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
         const jsonData = JSON.stringify(data, null, 2);
-        await fs.promises.writeFile('..\\js\\coordData.json', jsonData, 'utf8');
+        await fs.promises.writeFile(usedFile, jsonData, 'utf8');
         console.log('Data written to file successfully');
     } catch (error) {
         console.error('Error fetching or writing data:', error);
@@ -37,13 +59,16 @@ async function main() {
         if (userInput.toLowerCase() === "end") {
             loop = false;
         } else {
-            await fetchCoords(userInput);
+            await fetchCoords(0, 0, 0, userInput);
 
             console.log("\nYour location is " + userInput);
-            let data = JSON.parse(fs.readFileSync("..\\js\\coordData.json", "utf8"));
-            let longitude = data[0].lon;
-            let latitude = data[0].lat;
+            let coordData = JSON.parse(fs.readFileSync("..\\js\\coordData.json", "utf8"));
+            let longitude = coordData[0].lon;
+            let latitude = coordData[0].lat;
             console.log(longitude + " " + latitude);
+            await fetchCoords(1, longitude, latitude, "");
+            let weatherData = JSON.parse(fs.readFileSync("..\\js\\weatherData.json", "utf8"))
+            console.log(weatherData.weather[0].main);
         }
     }
 }
