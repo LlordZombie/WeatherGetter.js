@@ -2,6 +2,9 @@ import * as fs from 'fs';
 import * as readlineSync from 'readline-sync';
 //TODO aus koordinaten wetter machen
 const API_KEY: string = "562853829c3a677c00b469cfe4446517";
+
+
+//----------------------------------------------------------------------------------------------------------------------
 const Version: string = JSON.parse(fs.readFileSync("../package.json", "utf8")).version;
 const ProgramName = "WeatherGetter";
 const Date = 2023;
@@ -34,7 +37,7 @@ async function fetchCoords(apiUrlNum: number, lon: number, lat: number, city: st
     try {
         const response = await fetch(usedUrl);
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            fetchError = true;
         }
         const data = await response.json();
         const jsonData = JSON.stringify(data, null, 2);
@@ -61,6 +64,10 @@ async function main() {
         } else {
             await fetchCoords(0, 0, 0, userInput);
 
+            if (fetchError) {
+
+            }else{
+
             console.log("\nYour location is " + userInput);
             let coordData = JSON.parse(fs.readFileSync("..\\js\\coordData.json", "utf8"));
             let longitude = coordData[0].lon;
@@ -69,7 +76,7 @@ async function main() {
             await fetchCoords(1, longitude, latitude, "");
             let weatherData = JSON.parse(fs.readFileSync("..\\js\\weatherData.json", "utf8"))
             console.log(weatherData.weather[0].main);
-        }
+        }}
     }
 }
 
