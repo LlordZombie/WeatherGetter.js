@@ -1,6 +1,10 @@
 import * as fs from 'fs';
 import * as readlineSync from 'readline-sync';
-//TODO aus koordinaten wetter machen
+import {differenceInHours, differenceInMinutes} from 'date-fns';
+
+//----------------------------------------------------------------------------------------------------------------------
+
+//TODO für user gut machen
 const API_KEY: string = "562853829c3a677c00b469cfe4446517";
 
 
@@ -54,30 +58,42 @@ function input(): string {
 
 async function main() {
     console.log("\n" + ProgramName + " " + Date + " " + "Version: " + Version + "\n------------------------------------------------------------\n");
-
     let loop = true;
     while (loop) {
         let userInput = input();
-
         if (userInput.toLowerCase() === "end") {
             loop = false;
         } else {
             await fetchCoords(0, 0, 0, userInput);
-
             if (fetchError) {
-
-            }else{
-
-            console.log("\nYour location is " + userInput);
-            let coordData = JSON.parse(fs.readFileSync("..\\js\\coordData.json", "utf8"));
-            let longitude = coordData[0].lon;
-            let latitude = coordData[0].lat;
-            console.log(longitude + " " + latitude);
-            await fetchCoords(1, longitude, latitude, "");
-            let weatherData = JSON.parse(fs.readFileSync("..\\js\\weatherData.json", "utf8"))
-            console.log(weatherData.weather[0].main);
-        }}
+                console.log("Error");
+            } else {
+                console.log("\nYour location is " + userInput);
+                let coordData = JSON.parse(fs.readFileSync("..\\js\\coordData.json", "utf8"));
+                let longitude = coordData[0].lon;
+                let latitude = coordData[0].lat;
+                console.log(longitude + " " + latitude);
+                await fetchCoords(1, longitude, latitude, "");
+                let weatherData = JSON.parse(fs.readFileSync("..\\js\\weatherData.json", "utf8"))
+                console.log(weatherData.weather[0].main);
+                console.log(weatherData.weather[0].description);//geht auch in native language, muss ich schauen
+                console.log(weatherData.weather[1].temp);
+            }
+        }
     }
 }
 
 main();
+
+
+//----------------------------------------------------------------------------------------------------------------------
+
+function getTimeOfTheDayFromMillis(n: number) {
+
+    let Date: any;
+    const hours = differenceInHours(new Date(0), new Date(n));
+    const minutes = differenceInMinutes(new Date(0), new Date(n)) % 60;
+
+    const formattedDuration = `${hours} hours, ${minutes} minutes`;
+
+}
