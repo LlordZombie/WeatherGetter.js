@@ -13,33 +13,33 @@
   ],
   "base": "stations",
   "main": {
-    "temp": 11.54,
-    "feels_like": 10.68,
-    "temp_min": 9.41,
-    "temp_max": 13.6,
-    "pressure": 1012,
-    "humidity": 74,
-    "sea_level": 1012,
-    "grnd_level": 989
+    "temp": 13.87,
+    "feels_like": 13.48,
+    "temp_min": 12.56,
+    "temp_max": 15.09,
+    "pressure": 1010,
+    "humidity": 83,
+    "sea_level": 1010,
+    "grnd_level": 982
   },
   "visibility": 10000,
   "wind": {
-    "speed": 6.58,
-    "deg": 274,
-    "gust": 13.31
+    "speed": 1.18,
+    "deg": 3,
+    "gust": 2.14
   },
   "clouds": {
-    "all": 96
+    "all": 100
   },
-  "dt": 1700468685,
+  "dt": 1714720289,
   "sys": {
     "type": 2,
     "id": 20573,
     "country": "AT",
-    "sunrise": 1700460522,
-    "sunset": 1700493041
+    "sunrise": 1714707053,
+    "sunset": 1714759844
   },
-  "timezone": 3600,
+  "timezone": 7200,
   "id": 7872962,
   "name": "Hochleithen",
   "cod": 200
