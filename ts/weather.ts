@@ -77,7 +77,7 @@ async function main() {
                 let weatherData = JSON.parse(fs.readFileSync("..\\js\\weatherData.json", "utf8"))
                 console.log(weatherData.weather[0].main);
                 console.log(weatherData.weather[0].description);//geht auch in native language, muss ich schauen
-                console.log(weatherData.weather[1].temp);
+                console.log(weatherData.main.temp);
             }
         }
     }
